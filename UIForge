@@ -1,28 +1,23 @@
-local UIForge = {}
-
--- Variables
-local ScreenSize = workspace.CurrentCamera.ViewportSize
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
 
--- Create Main GUI Frame
+-- Create the main GUI frame
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0.5, 0, 0.5, 0)
-MainFrame.Position = UDim2.new(0.25, 0, 0.25, 0)
+MainFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
+MainFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
 MainFrame.Parent = player:WaitForChild("PlayerGui")
 
--- Create Toggle Button
+-- Create the toggle button
 local ToggleButton = Instance.new("TextButton")
 ToggleButton.Size = UDim2.new(0, 50, 0, 50)
 ToggleButton.Position = UDim2.new(0.95, -55, 0.05, 0)
 ToggleButton.Text = "☰"
 ToggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-ToggleButton.Parent = MainFrame
+ToggleButton.Parent = player:WaitForChild("PlayerGui")
 
--- Create Close Button
+-- Create a close button
 local CloseButton = Instance.new("TextButton")
 CloseButton.Size = UDim2.new(0, 50, 0, 50)
 CloseButton.Position = UDim2.new(0.95, -55, 0.95, -55)
@@ -30,60 +25,33 @@ CloseButton.Text = "X"
 CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 CloseButton.Parent = MainFrame
 
--- Create Options Frame
+-- Create options frame
 local OptionsFrame = Instance.new("Frame")
 OptionsFrame.Size = UDim2.new(1, 0, 1, 0)
 OptionsFrame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 OptionsFrame.Visible = false
 OptionsFrame.Parent = MainFrame
 
--- Create Theme Toggle
-local ThemeButton = Instance.new("TextButton")
-ThemeButton.Size = UDim2.new(0.2, 0, 0.1, 0)
-ThemeButton.Position = UDim2.new(0.4, 0, 0.4, 0)
-ThemeButton.Text = "Toggle Theme"
-ThemeButton.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
-ThemeButton.Parent = OptionsFrame
-
--- Functions
-local function setTheme(theme)
-    if theme == "dark" then
-        MainFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        ToggleButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-        CloseButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
-    else
-        MainFrame.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
-        ToggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-        CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    end
-end
-
+-- Function to toggle options visibility
 local function toggleOptions()
     OptionsFrame.Visible = not OptionsFrame.Visible
 end
 
--- Event Listeners
+-- Event listeners
 ToggleButton.MouseButton1Click:Connect(toggleOptions)
 
 CloseButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = false
 end)
 
-ThemeButton.MouseButton1Click:Connect(function()
-    local currentTheme = player:GetAttribute("Theme") or "light"
-    local newTheme = currentTheme == "dark" and "light" or "dark"
-    player:SetAttribute("Theme", newTheme)
-    setTheme(newTheme)
-end)
-
--- Draggable GUI Functionality
-local dragToggle = nil
-local dragStart = nil
-local startPos = nil
+-- Draggable GUI functionality
+local dragging
+local dragStart
+local startPos
 
 MainFrame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragToggle = true
+        dragging = true
         dragStart = input.Position
         startPos = MainFrame.Position
     end
@@ -91,18 +59,16 @@ end)
 
 MainFrame.InputEnded:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragToggle = false
+        dragging = false
     end
 end)
 
 UserInputService.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and dragToggle then
+    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
         local delta = input.Position - dragStart
         MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 end)
 
--- Print on Load
+-- Print on load
 print("UIForge GUI successfully loaded!")
-
-return UIForge
