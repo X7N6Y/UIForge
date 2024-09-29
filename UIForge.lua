@@ -1,44 +1,44 @@
 -- UIForge.lua
-local UIForge = {}
 
--- Function to create a ScreenGui
-function UIForge.createScreenGui(parent)
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.Parent = parent
-    return screenGui
-end
+local UIForge = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local OpenButton = Instance.new("TextButton")
+local SaveButton = Instance.new("TextButton")
+local EditButton = Instance.new("TextButton")
+local InfoLabel = Instance.new("TextLabel")
 
--- Function to create a Button
-function UIForge.createButton(text, position, size, parent)
-    local button = Instance.new("TextButton")
-    button.Text = text
-    button.Position = position
-    button.Size = size
-    button.Parent = parent
+-- Set properties for MainFrame
+MainFrame.Parent = UIForge
+MainFrame.Size = UDim2.new(0.5, 0, 0.5, 0)
+MainFrame.Position = UDim2.new(0.25, 0, 0.25, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 
-    -- Optional: Add some styling
-    button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White background
-    button.TextColor3 = Color3.fromRGB(0, 0, 0) -- Black text
-    button.BorderSizePixel = 0
+-- Set properties for OpenButton
+OpenButton.Parent = MainFrame
+OpenButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+OpenButton.Position = UDim2.new(0.1, 0, 0.1, 0)
+OpenButton.Text = "Open"
+OpenButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
 
-    return button
-end
+-- Set properties for SaveButton
+SaveButton.Parent = MainFrame
+SaveButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+SaveButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+SaveButton.Text = "Save"
+SaveButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 
--- Function to create a Label
-function UIForge.createLabel(text, position, size, parent)
-    local label = Instance.new("TextLabel")
-    label.Text = text
-    label.Position = position
-    label.Size = size
-    label.Parent = parent
+-- Set properties for EditButton
+EditButton.Parent = MainFrame
+EditButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+EditButton.Position = UDim2.new(0.1, 0, 0.5, 0)
+EditButton.Text = "Edit"
+EditButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 
-    -- Optional: Add some styling
-    label.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Black background
-    label.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
-    label.BorderSizePixel = 0
+-- Set properties for InfoLabel
+InfoLabel.Parent = MainFrame
+InfoLabel.Size = UDim2.new(0.8, 0, 0.1, 0)
+InfoLabel.Position = UDim2.new(0.1, 0, 0.7, 0)
+InfoLabel.Text = "Welcome to UIForge! Customize your UI."
+InfoLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 
-    return label
-end
-
--- Return the UIForge module
-return UIForge
+-- Make sure to include functionality for buttons later
