@@ -8,6 +8,7 @@ MainFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
 MainFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
 MainFrame.Parent = player:WaitForChild("PlayerGui")
+MainFrame.Visible = true -- Ensure the main frame is visible
 
 -- Create the toggle button
 local ToggleButton = Instance.new("TextButton")
@@ -89,5 +90,6 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 -- Show loading notification when GUI loads
+print("Attempting to show notification...")
 showNotification()
 print("UIForge GUI successfully loaded!")
