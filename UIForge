@@ -1,33 +1,68 @@
 local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local TextLabel = Instance.new("TextLabel")
-local TextButton = Instance.new("TextButton")
+local MainFrame = Instance.new("Frame")
+local TitleLabel = Instance.new("TextLabel")
+local ToggleButton = Instance.new("TextButton")
+local Slider = Instance.new("TextButton")
+local SliderValueLabel = Instance.new("TextLabel")
 
--- Configure Frame
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
-Frame.Size = UDim2.new(0, 200, 0, 100)
+-- Configure Main Frame
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+MainFrame.Size = UDim2.new(0, 300, 0, 200)
 
--- Configure TextLabel
-TextLabel.Parent = Frame
-TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.Size = UDim2.new(1, 0, 0.5, 0)
-TextLabel.Text = "Welcome to UIForge"
-TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel.TextScaled = true
+-- Configure Title Label
+TitleLabel.Parent = MainFrame
+TitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.Size = UDim2.new(1, 0, 0.2, 0)
+TitleLabel.Text = "Advanced UIForge"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.TextScaled = true
 
--- Configure TextButton
-TextButton.Parent = Frame
-TextButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-TextButton.Size = UDim2.new(1, 0, 0.5, 0)
-TextButton.Position = UDim2.new(0, 0, 0.5, 0)
-TextButton.Text = "Click Me"
-TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- Configure Toggle Button
+ToggleButton.Parent = MainFrame
+ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
+ToggleButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+ToggleButton.Position = UDim2.new(0.1, 0, 0.25, 0)
+ToggleButton.Text = "Toggle Option"
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
--- Button Click Function
-TextButton.MouseButton1Click:Connect(function()
-    print("Button Clicked!")
+-- Toggle Logic
+local toggleOn = false
+ToggleButton.MouseButton1Click:Connect(function()
+    toggleOn = not toggleOn
+    if toggleOn then
+        ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        print("Toggle is ON")
+    else
+        ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
+        print("Toggle is OFF")
+    end
+end)
+
+-- Configure Slider
+Slider.Parent = MainFrame
+Slider.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+Slider.Size = UDim2.new(0.8, 0, 0.2, 0)
+Slider.Position = UDim2.new(0.1, 0, 0.5, 0)
+Slider.Text = "Set Value"
+Slider.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Configure Slider Value Label
+SliderValueLabel.Parent = MainFrame
+SliderValueLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SliderValueLabel.Size = UDim2.new(1, 0, 0.2, 0)
+SliderValueLabel.Position = UDim2.new(0, 0, 0.75, 0)
+SliderValueLabel.Text = "Value: 0"
+SliderValueLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+SliderValueLabel.TextScaled = true
+
+-- Slider Logic
+local value = 0
+Slider.MouseButton1Click:Connect(function()
+    value = (value + 1) % 10 -- Loop through values 0 to 9
+    SliderValueLabel.Text = "Value: " .. value
+    print("Slider Value: " .. value)
 end)
 
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
