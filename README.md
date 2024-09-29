@@ -11,4 +11,4 @@ Welcome to UIForge, the ultimate Roblox UI exploiting library that allows you to
 start using UIForge, simply add the following code to your Executor:
 
 ```lua
-local UIForge = loadstring(game:HttpGet("https://raw.githubusercontent.com/X7N6Y/UIForge/main/UIForge"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/X7N6Y/UIForge/main/UIForge"))()
