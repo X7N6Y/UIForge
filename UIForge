@@ -4,18 +4,22 @@ local TitleLabel = Instance.new("TextLabel")
 local ToggleButton = Instance.new("TextButton")
 local Slider = Instance.new("TextButton")
 local SliderValueLabel = Instance.new("TextLabel")
+local DropdownButton = Instance.new("TextButton")
+local DropdownList = Instance.new("Frame")
+local TextBox = Instance.new("TextBox")
+local DropdownValueLabel = Instance.new("TextLabel")
 
 -- Configure Main Frame
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
-MainFrame.Size = UDim2.new(0, 300, 0, 200)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
+MainFrame.Size = UDim2.new(0, 300, 0, 300)
 
 -- Configure Title Label
 TitleLabel.Parent = MainFrame
 TitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.Size = UDim2.new(1, 0, 0.2, 0)
-TitleLabel.Text = "Advanced UIForge"
+TitleLabel.Text = "Ultimate UIForge"
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.TextScaled = true
 
@@ -23,7 +27,7 @@ TitleLabel.TextScaled = true
 ToggleButton.Parent = MainFrame
 ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
 ToggleButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-ToggleButton.Position = UDim2.new(0.1, 0, 0.25, 0)
+ToggleButton.Position = UDim2.new(0.1, 0, 0.2, 0)
 ToggleButton.Text = "Toggle Option"
 ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
@@ -65,4 +69,51 @@ Slider.MouseButton1Click:Connect(function()
     print("Slider Value: " .. value)
 end)
 
+-- Configure Dropdown Button
+DropdownButton.Parent = MainFrame
+DropdownButton.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
+DropdownButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+DropdownButton.Position = UDim2.new(0.1, 0, 0.9, 0)
+DropdownButton.Text = "Select Option"
+DropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Configure Dropdown List
+DropdownList.Parent = MainFrame
+DropdownList.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+DropdownList.Size = UDim2.new(0.8, 0, 0.3, 0)
+DropdownList.Position = UDim2.new(0.1, 0, 1, 0)
+DropdownList.Visible = false
+
+-- Dropdown Options
+local options = {"Option 1", "Option 2", "Option 3"}
+for i, option in ipairs(options) do
+    local optionButton = Instance.new("TextButton")
+    optionButton.Parent = DropdownList
+    optionButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+    optionButton.Size = UDim2.new(1, 0, 0.2, 0)
+    optionButton.Position = UDim2.new(0, 0, (i-1)*0.2, 0)
+    optionButton.Text = option
+    optionButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+    optionButton.MouseButton1Click:Connect(function()
+        DropdownButton.Text = "Selected: " .. option
+        print("Dropdown Option Selected: " .. option)
+        DropdownList.Visible = false
+    end)
+end
+
+-- Dropdown Logic
+DropdownButton.MouseButton1Click:Connect(function()
+    DropdownList.Visible = not DropdownList.Visible
+end)
+
+-- Configure TextBox
+TextBox.Parent = MainFrame
+TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.Size = UDim2.new(0.8, 0, 0.1, 0)
+TextBox.Position = UDim2.new(0.1, 0, 1.2, 0)
+TextBox.PlaceholderText = "Type here..."
+TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+-- Display GUI
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
