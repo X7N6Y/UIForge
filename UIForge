@@ -1,50 +1,85 @@
--- UIForge GUI
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-
--- Create the main GUI frame
+local Player = game.Players.LocalPlayer
+local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0.25, 0, 0.25, 0)
-MainFrame.Position = UDim2.new(0.75, -125, 0.5, -125)
-MainFrame.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
-MainFrame.Visible = true
-MainFrame.Parent = player:WaitForChild("PlayerGui")
+local HomeChannel = Instance.new("Frame")
+local HomeButton = Instance.new("TextButton")
+local CreditsLabel = Instance.new("TextLabel")
+local FrameTitle = Instance.new("TextLabel")
+local UIListLayout = Instance.new("UIListLayout")
 
--- Create the toggle button
-local ToggleButton = Instance.new("TextButton")
-ToggleButton.Size = UDim2.new(0, 50, 0, 50)
-ToggleButton.Position = UDim2.new(0.95, -55, 0.05, 0)
-ToggleButton.Text = "☰"
-ToggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-ToggleButton.Parent = player:WaitForChild("PlayerGui")
+-- GUI Settings
+ScreenGui.Name = "UIForge"
+ScreenGui.Parent = Player:WaitForChild("PlayerGui")
 
--- Create close button
-local CloseButton = Instance.new("TextButton")
-CloseButton.Size = UDim2.new(0, 50, 0, 50)
-CloseButton.Position = UDim2.new(0.95, -55, 0.95, -55)
-CloseButton.Text = "X"
-CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-CloseButton.Parent = MainFrame
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Dark background for UIForge
+MainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+MainFrame.Size = UDim2.new(0, 400, 0, 300)
+MainFrame.BackgroundTransparency = 0.1
+MainFrame.BorderSizePixel = 0
 
--- Create options frame
-local OptionsFrame = Instance.new("Frame")
-OptionsFrame.Size = UDim2.new(1, 0, 1, 0)
-OptionsFrame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-OptionsFrame.Visible = false
-OptionsFrame.Parent = MainFrame
+-- Title
+FrameTitle.Name = "FrameTitle"
+FrameTitle.Parent = MainFrame
+FrameTitle.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+FrameTitle.Size = UDim2.new(1, 0, 0, 50)
+FrameTitle.Text = "UIForge"
+FrameTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+FrameTitle.Font = Enum.Font.SourceSansBold
+FrameTitle.TextSize = 24
+FrameTitle.TextStrokeTransparency = 0.5
 
--- Function to toggle options visibility
-local function toggleOptions()
-    OptionsFrame.Visible = not OptionsFrame.Visible
+-- Home Channel
+HomeChannel.Name = "HomeChannel"
+HomeChannel.Parent = MainFrame
+HomeChannel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+HomeChannel.Size = UDim2.new(1, 0, 1, -50)
+HomeChannel.Position = UDim2.new(0, 0, 0, 50)
+
+-- Home Button
+HomeButton.Name = "HomeButton"
+HomeButton.Parent = HomeChannel
+HomeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+HomeButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+HomeButton.Position = UDim2.new(0.35, 0, 0.05, 0)
+HomeButton.Text = "Home"
+HomeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+HomeButton.Font = Enum.Font.SourceSans
+HomeButton.TextSize = 20
+
+-- Credits Label
+CreditsLabel.Name = "CreditsLabel"
+CreditsLabel.Parent = HomeChannel
+CreditsLabel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+CreditsLabel.Size = UDim2.new(1, 0, 0.9, -10)
+CreditsLabel.Position = UDim2.new(0, 0, 0.1, 0)
+CreditsLabel.Text = "Credits:\nCreated by [Your Name]\nSpecial thanks to [Contributors]"
+CreditsLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+CreditsLabel.Font = Enum.Font.SourceSans
+CreditsLabel.TextSize = 18
+CreditsLabel.TextWrapped = true
+
+-- UIListLayout for structured layout
+UIListLayout.Parent = HomeChannel
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 10)
+
+-- Optimizing Load Time and Performance
+local function optimizeUI()
+    -- Optional: Load assets asynchronously
+    -- (Place your asset loading code here, if needed)
 end
 
--- Event listeners
-ToggleButton.MouseButton1Click:Connect(toggleOptions)
-CloseButton.MouseButton1Click:Connect(function()
-    MainFrame.Visible = false
-end)
+optimizeUI()
 
--- Console loading messages
-print("Attempting to load UIForge GUI...")
-wait(2)  -- Simulate loading time
-print("UIForge GUI loaded successfully!")
+-- Show GUI
+ScreenGui.Enabled = true
+
+-- Connect Home Button Functionality
+HomeButton.MouseButton1Click:Connect(function()
+    -- Logic for navigating back to the Home Channel
+    CreditsLabel.Visible = true
+end)
