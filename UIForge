@@ -6,8 +6,6 @@ local Slider = Instance.new("TextButton")
 local SliderValueLabel = Instance.new("TextLabel")
 local DropdownButton = Instance.new("TextButton")
 local DropdownList = Instance.new("Frame")
-local TextBox = Instance.new("TextBox")
-local DropdownValueLabel = Instance.new("TextLabel")
 local OpenButton = Instance.new("TextButton")
 
 -- Configure Main Frame
@@ -15,7 +13,7 @@ MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
 MainFrame.Size = UDim2.new(0, 300, 0, 300)
-MainFrame.Visible = true -- Set to visible initially
+MainFrame.Visible = true
 
 -- Configure Title Label
 TitleLabel.Parent = MainFrame
@@ -109,20 +107,12 @@ DropdownButton.MouseButton1Click:Connect(function()
     DropdownList.Visible = not DropdownList.Visible
 end)
 
--- Configure TextBox
-TextBox.Parent = MainFrame
-TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextBox.Size = UDim2.new(0.8, 0, 0.1, 0)
-TextBox.Position = UDim2.new(0.1, 0, 1.4, 0)
-TextBox.PlaceholderText = "Type here..."
-TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
-
 -- Configure Open Button
 OpenButton.Parent = ScreenGui
 OpenButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
 OpenButton.Size = UDim2.new(0, 50, 0, 50)
 OpenButton.Position = UDim2.new(0.05, 0, 0.5, -25)
-OpenButton.Text = "🡥"
+OpenButton.Text = "➕"
 OpenButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 OpenButton.TextScaled = true
 
@@ -131,7 +121,7 @@ local guiVisible = true
 OpenButton.MouseButton1Click:Connect(function()
     guiVisible = not guiVisible
     MainFrame.Visible = guiVisible
-    OpenButton.Text = guiVisible and "🡥" or "🡤" -- Change icon based on visibility
+    OpenButton.Text = guiVisible and "➕" or "➖" -- Change icon based on visibility
 end)
 
 -- Display GUI
