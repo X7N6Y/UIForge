@@ -1,14 +1,14 @@
+-- UIForge GUI
 local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 
 -- Create the main GUI frame
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
-MainFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
+MainFrame.Size = UDim2.new(0.25, 0, 0.25, 0)
+MainFrame.Position = UDim2.new(0.75, -125, 0.5, -125)
 MainFrame.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+MainFrame.Visible = true
 MainFrame.Parent = player:WaitForChild("PlayerGui")
-MainFrame.Visible = true -- Ensure the main frame is visible
 
 -- Create the toggle button
 local ToggleButton = Instance.new("TextButton")
@@ -18,7 +18,7 @@ ToggleButton.Text = "☰"
 ToggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 ToggleButton.Parent = player:WaitForChild("PlayerGui")
 
--- Create a close button
+-- Create close button
 local CloseButton = Instance.new("TextButton")
 CloseButton.Size = UDim2.new(0, 50, 0, 50)
 CloseButton.Position = UDim2.new(0.95, -55, 0.95, -55)
@@ -58,38 +58,10 @@ end
 
 -- Event listeners
 ToggleButton.MouseButton1Click:Connect(toggleOptions)
-
 CloseButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = false
 end)
 
--- Draggable GUI functionality
-local dragging
-local dragStart
-local startPos
-
-MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position
-    end
-end)
-
-MainFrame.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = false
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
-        local delta = input.Position - dragStart
-        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
-end)
-
 -- Show loading notification when GUI loads
-print("Attempting to show notification...")
 showNotification()
 print("UIForge GUI successfully loaded!")
