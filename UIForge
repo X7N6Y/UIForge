@@ -8,12 +8,14 @@ local DropdownButton = Instance.new("TextButton")
 local DropdownList = Instance.new("Frame")
 local TextBox = Instance.new("TextBox")
 local DropdownValueLabel = Instance.new("TextLabel")
+local OpenButton = Instance.new("TextButton")
 
 -- Configure Main Frame
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
 MainFrame.Size = UDim2.new(0, 300, 0, 300)
+MainFrame.Visible = true -- Set to visible initially
 
 -- Configure Title Label
 TitleLabel.Parent = MainFrame
@@ -26,8 +28,8 @@ TitleLabel.TextScaled = true
 -- Configure Toggle Button
 ToggleButton.Parent = MainFrame
 ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
-ToggleButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-ToggleButton.Position = UDim2.new(0.1, 0, 0.2, 0)
+ToggleButton.Size = UDim2.new(0.8, 0, 0.1, 0)
+ToggleButton.Position = UDim2.new(0.1, 0, 0.25, 0)
 ToggleButton.Text = "Toggle Option"
 ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
@@ -47,16 +49,16 @@ end)
 -- Configure Slider
 Slider.Parent = MainFrame
 Slider.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
-Slider.Size = UDim2.new(0.8, 0, 0.2, 0)
-Slider.Position = UDim2.new(0.1, 0, 0.5, 0)
+Slider.Size = UDim2.new(0.8, 0, 0.1, 0)
+Slider.Position = UDim2.new(0.1, 0, 0.4, 0)
 Slider.Text = "Set Value"
 Slider.TextColor3 = Color3.fromRGB(255, 255, 255)
 
 -- Configure Slider Value Label
 SliderValueLabel.Parent = MainFrame
 SliderValueLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SliderValueLabel.Size = UDim2.new(1, 0, 0.2, 0)
-SliderValueLabel.Position = UDim2.new(0, 0, 0.75, 0)
+SliderValueLabel.Size = UDim2.new(1, 0, 0.1, 0)
+SliderValueLabel.Position = UDim2.new(0, 0, 0.55, 0)
 SliderValueLabel.Text = "Value: 0"
 SliderValueLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 SliderValueLabel.TextScaled = true
@@ -72,8 +74,8 @@ end)
 -- Configure Dropdown Button
 DropdownButton.Parent = MainFrame
 DropdownButton.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
-DropdownButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-DropdownButton.Position = UDim2.new(0.1, 0, 0.9, 0)
+DropdownButton.Size = UDim2.new(0.8, 0, 0.1, 0)
+DropdownButton.Position = UDim2.new(0.1, 0, 0.7, 0)
 DropdownButton.Text = "Select Option"
 DropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
@@ -81,7 +83,7 @@ DropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 DropdownList.Parent = MainFrame
 DropdownList.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 DropdownList.Size = UDim2.new(0.8, 0, 0.3, 0)
-DropdownList.Position = UDim2.new(0.1, 0, 1, 0)
+DropdownList.Position = UDim2.new(0.1, 0, 1.1, 0)
 DropdownList.Visible = false
 
 -- Dropdown Options
@@ -111,9 +113,26 @@ end)
 TextBox.Parent = MainFrame
 TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 TextBox.Size = UDim2.new(0.8, 0, 0.1, 0)
-TextBox.Position = UDim2.new(0.1, 0, 1.2, 0)
+TextBox.Position = UDim2.new(0.1, 0, 1.4, 0)
 TextBox.PlaceholderText = "Type here..."
 TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+-- Configure Open Button
+OpenButton.Parent = ScreenGui
+OpenButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
+OpenButton.Size = UDim2.new(0, 50, 0, 50)
+OpenButton.Position = UDim2.new(0.05, 0, 0.5, -25)
+OpenButton.Text = "🡥"
+OpenButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+OpenButton.TextScaled = true
+
+-- Open Button Logic
+local guiVisible = true
+OpenButton.MouseButton1Click:Connect(function()
+    guiVisible = not guiVisible
+    MainFrame.Visible = guiVisible
+    OpenButton.Text = guiVisible and "🡥" or "🡤" -- Change icon based on visibility
+end)
 
 -- Display GUI
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
