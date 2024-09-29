@@ -1,36 +1,33 @@
--- Load the UIForge library
-local UIForge = loadstring(game:HttpGet("https://raw.githubusercontent.com/X7N6Y/UIForge/main/UIForge"))()
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local TextButton = Instance.new("TextButton")
 
--- Create the main ScreenGui
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "UIForgeGUI"
-screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Configure Frame
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+Frame.Size = UDim2.new(0, 200, 0, 100)
 
--- Create a Frame for the GUI
-local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0.3, 0, 0.5, 0)
-mainFrame.Position = UDim2.new(0.35, 0, 0.25, 0)
-mainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White color
-mainFrame.Parent = screenGui
+-- Configure TextLabel
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.Size = UDim2.new(1, 0, 0.5, 0)
+TextLabel.Text = "Welcome to UIForge"
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
 
--- Create a Button
-local button = Instance.new("TextButton")
-button.Size = UDim2.new(0.5, 0, 0.1, 0)
-button.Position = UDim2.new(0.25, 0, 0.4, 0)
-button.BackgroundColor3 = Color3.fromRGB(0, 170, 0) -- Green color
-button.Text = "Click Me!"
-button.Parent = mainFrame
+-- Configure TextButton
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+TextButton.Size = UDim2.new(1, 0, 0.5, 0)
+TextButton.Position = UDim2.new(0, 0, 0.5, 0)
+TextButton.Text = "Click Me"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
--- Function to run when button is clicked
-button.MouseButton1Click:Connect(function()
+-- Button Click Function
+TextButton.MouseButton1Click:Connect(function()
     print("Button Clicked!")
-    -- You can add more functionalities here
 end)
 
--- Optional: Create a Label
-local label = Instance.new("TextLabel")
-label.Size = UDim2.new(1, 0, 0.2, 0)
-label.Position = UDim2.new(0, 0, 0, 0)
-label.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White color
-label.Text = "Welcome to UIForge!"
-label.Parent = mainFrame
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
