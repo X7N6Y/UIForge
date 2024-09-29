@@ -32,9 +32,27 @@ OptionsFrame.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 OptionsFrame.Visible = false
 OptionsFrame.Parent = MainFrame
 
+-- Create notification pop-up
+local Notification = Instance.new("TextLabel")
+Notification.Size = UDim2.new(0.25, 0, 0.1, 0)
+Notification.Position = UDim2.new(0.75, 0, 0.9, 0)
+Notification.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
+Notification.Text = "Loaded Successfully!"
+Notification.TextColor3 = Color3.fromRGB(255, 255, 255)
+Notification.TextScaled = true
+Notification.Visible = false
+Notification.Parent = player:WaitForChild("PlayerGui")
+
 -- Function to toggle options visibility
 local function toggleOptions()
     OptionsFrame.Visible = not OptionsFrame.Visible
+end
+
+-- Function to show notification
+local function showNotification()
+    Notification.Visible = true
+    wait(3)  -- Notification shows for 3 seconds
+    Notification.Visible = false
 end
 
 -- Event listeners
@@ -70,5 +88,6 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- Print on load
+-- Show loading notification when GUI loads
+showNotification()
 print("UIForge GUI successfully loaded!")
