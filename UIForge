@@ -1,16 +1,112 @@
--- In love.load()
-startButton = Button:new(50, 50, 120, 40, "Start", startAnimation)
-speedSlider = Slider:new(50, 200, 200, 20, minBoxSpeed, maxBoxSpeed, boxSpeed, updateSpeed)
+local gui = {}
+
+-- Button class
+local Button = {}
+Button.__index = Button
+
+function Button:new(x, y, width, height, text, onClick)
+  local button = setmetatable({}, Button)
+  button.x = x
+  button.y = y
+  button.width = width
+  button.height = height
+  button.text = text
+  button.onClick = onClick
+  button.isHovered = false
+  return button
+end
+
+function Button:update(mx, my)
+  self.isHovered = mx >= self.x and mx <= self.x + self.width and my >= self.y and my <= self.y + self.height
+end
+
+function Button:draw()
+  local color = self.isHovered and {0.8, 0.8, 0.8} or {0.6, 0.6, 0.6}
+  love.graphics.setColor(unpack(color))
+  love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, 5) -- Rounded corners
+  love.graphics.setColor(1, 1, 1) -- White text
+  love.graphics.print(self.text, self.x + self.width / 2 - love.graphics.getFont():getWidth(self.text) / 2, self.y + self.height / 2 - love.graphics.getFont():getHeight() / 2)
+end
 
 
--- In love.update(dt)
-startButton:update(love.mouse.getX(), love.mouse.getY())
-speedSlider:update(love.mouse.getX(), love.mouse.getY())
--- ... other update logic
+-- Slider class
+local Slider = {}
+Slider.__index = Slider
+
+function Slider:new(x, y, width, height, minVal, maxVal, initialVal, onValueChanged)
+  local slider = setmetatable({}, Slider)
+  slider.x = x
+  slider.y = y
+  slider.width = width
+  slider.height = height
+  slider.minVal = minVal
+  slider.maxVal = maxVal
+  slider.value = initialVal
+  slider.onValueChanged = onValueChanged
+  slider.isDragging = false
+  return slider
+end
+
+function Slider:update(mx, my)
+  if self.isDragging then
+    self.value = math.clamp(self.minVal + (mx - self.x) / self.width * (self.maxVal - self.minVal), self.minVal, self.maxVal)
+    if self.onValueChanged then self.onValueChanged(self.value) end
+  end
+end
+
+function Slider:draw()
+  love.graphics.setColor(0.4, 0.4, 0.4)
+  love.graphics.rectangle("fill", self.x, self.y + self.height / 2 - 2, self.width, 4)
+  local handleX = self.x + (self.value - self.minVal) / (self.maxVal - self.minVal) * self.width
+  local color = self.isDragging or self:isMouseOverHandle(love.mouse.getX(), love.mouse.getY()) and {0.8, 0.8, 0.8} or {0.6, 0.6, 0.6}
+  love.graphics.setColor(unpack(color))
+  love.graphics.circle("fill", handleX, self.y + self.height / 2, 8)
+  love.graphics.setColor(1, 1, 1)
+  love.graphics.print(string.format("%.1f", self.value), self.x + self.width + 10, self.y + self.height / 2 - love.graphics.getFont():getHeight()/2)
+end
+
+function Slider:isMouseOverHandle(mx, my)
+    local handleX = self.x + (self.value - self.minVal) / (self.maxVal - self.minVal) * self.width
+    return mx >= handleX - 8 and mx <= handleX + 8 and my >= self.y + self.height / 2 - 8 and my <= self.y + self.height / 2 + 8
+end
 
 
+function Slider:mousepressed(mx, my)
+  if self:isMouseOverHandle(mx, my) then self.isDragging = true end
+end
+function Slider:mousereleased() self.isDragging = false end
 
--- In love.draw()
-startButton:draw()
-speedSlider:draw()
--- ... other drawing logic
+
+--  Example Usage (in your love.load, love.update, love.draw)
+gui.startButton = Button:new(50, 50, 120, 40, "Start", function() -- An example function
+	print("Start button clicked")
+	return true -- Return a value if you need to
+end)
+gui.speedSlider = Slider:new(50, 120, 200, 20, 10, 100, 50, function(newValue) print("Slider value changed:", newValue) end)
+
+
+function love.update(dt)
+    if gui.startButton.onClick then 
+        gui.startButton:update(love.mouse.getX(), love.mouse.getY())
+    end
+    if gui.speedSlider.onValueChanged then
+        gui.speedSlider:update(love.mouse.getX(), love.mouse.getY())
+    end
+end
+
+
+function love.draw()
+    love.graphics.setFont(love.graphics.newFont(12)) -- Change font size
+    gui.startButton:draw()
+    gui.speedSlider:draw()
+end
+
+
+function love.mousepressed(x, y, button)
+    if gui.startButton:clicked(x, y) then return end
+    if gui.speedSlider:mousepressed(x,y) then return end
+end
+
+function love.mousereleased(x, y, button)
+    if gui.speedSlider:mousereleased() then return end
+end
